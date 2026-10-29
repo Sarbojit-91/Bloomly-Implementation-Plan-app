@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------------
+   Bloomly design tokens — white & purple by default, deep plum in dark mode.
+   ------------------------------------------------------------------------ */
+:root {
+  --canvas: #f7f5ff;
+  --canvas-glow: #efe9ff;
+  --surface: #ffffff;
+  --surface-muted: #fbfaff;
+  --ink: #1d1530;
+  --ink-soft: #4a4160;
+  --muted: #776e8c;
+  --border: #e9e4f5;
+  --border-strong: #d9d0ee;
+  --primary: #5b2ebf;
+  --primary-hover: #4a22a3;
+  --primary-ink: #ffffff;
+  --accent: #8b5cf6;
+  --tint: #ede7ff;
+  --tint-strong: #d9ccff;
+  --success: #2f9e74;
+  --success-tint: #e3f6ee;
+  --warn: #b7791f;
+  --warn-tint: #fdf3dd;
+  --danger: #c2416b;
+  --danger-tint: #fde8ef;
+  --ring: #8b5cf6;
+  --shadow-color: 83 52 168;
+}
+
+.dark {
+  --canvas: #120e1a;
+  --canvas-glow: #1c1530;
+  --surface: #1b1626;
+  --surface-muted: #211b2f;
+  --ink: #f3effc;
+  --ink-soft: #d2c9e6;
+  --muted: #a198b8;
+  --border: #2e2640;
+  --border-strong: #3c3253;
+  --primary: #9b7bff;
+  --primary-hover: #b49cff;
+  --primary-ink: #160f24;
+  --accent: #b39dff;
+  --tint: #2a2142;
+  --tint-strong: #3a2d5e;
+  --success: #4cc79a;
+  --success-tint: #173528;
+  --warn: #e0b04f;
+  --warn-tint: #352a14;
+  --danger: #f07ba0;
+  --danger-tint: #3a1a27;
+  --ring: #b39dff;
+  --shadow-color: 0 0 0;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-ink: var(--primary-ink);
+  --color-accent: var(--accent);
+  --color-tint: var(--tint);
+  --color-tint-strong: var(--tint-strong);
+  --color-success: var(--success);
+  --color-success-tint: var(--success-tint);
+  --color-warn: var(--warn);
+  --color-warn-tint: var(--warn-tint);
+  --color-danger: var(--danger);
+  --color-danger-tint: var(--danger-tint);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  --radius-card: 1.5rem;
+
+  --shadow-soft: 0 1px 2px rgb(var(--shadow-color) / 0.04), 0 4px 16px -4px rgb(var(--shadow-color) / 0.08);
+  --shadow-lift: 0 2px 4px rgb(var(--shadow-color) / 0.05), 0 12px 32px -8px rgb(var(--shadow-color) / 0.16);
+  --shadow-glow: 0 8px 24px -6px rgb(91 46 191 / 0.45);
+
+  --animate-pop: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-fade-up: fade-up 0.5s ease-out both;
+  --animate-float: float 6s ease-in-out infinite;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+html {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--canvas);
+  background-image:
+    radial-gradient(60rem 30rem at 85% -10%, var(--canvas-glow), transparent 70%),
+    radial-gradient(40rem 24rem at -10% 10%, var(--canvas-glow), transparent 70%);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--tint-strong);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--tint);
+  border-radius: 1rem;
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.35), transparent);
+  animation: shimmer 1.4s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
